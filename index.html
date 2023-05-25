@@ -9,12 +9,16 @@
     .meal-container {
       font-family: Arial, sans-serif;
       padding: 20px;
+      display: flex;
+    }
+    .meal-column {
+      flex: 1;
     }
     .meal-title {
       font-size: 20px;
       font-weight: bold;
       margin-bottom: 10px;
-      white-space: pre-wrap; /* 줄바꿈 적용 */
+      white-space: pre-wrap;
     }
     .meal-item {
       margin-bottom: 5px;
@@ -23,13 +27,35 @@
 </head>
 <body>
   <h1>테스트용</h1>
-  <div id="meal-result"></div>
+  <div class="meal-container">
+    <div class="meal-column">
+      <h2>조식</h2>
+      <div id="breakfast-result"></div>
+    </div>
+    <div class="meal-column">
+      <h2>중식</h2>
+      <div id="lunch-result"></div>
+    </div>
+    <div class="meal-column">
+      <h2>석식</h2>
+      <div id="dinner-result"></div>
+    </div>
+  </div>
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
     // API 요청을 보내고 결과를 표시하는 함수
-    function displayData(response) {
-      var mealContainer = document.getElementById('meal-result');
+    function displayData(response, mealType) {
+      var mealContainer;
+
+      if (mealType === "1") {
+        mealContainer = document.getElementById('breakfast-result');
+      } else if (mealType === "2") {
+        mealContainer = document.getElementById('lunch-result');
+      } else if (mealType === "3") {
+        mealContainer = document.getElementById('dinner-result');
+      }
+
       mealContainer.innerHTML = '';
 
       if (response !== undefined && response.mealServiceDietInfo.length > 0) {
@@ -39,9 +65,9 @@
           var mealItem = document.createElement('div');
           mealItem.classList.add('meal-item');
 
-          var mealTitle = document.createElement('pre'); // <pre> 요소 사용
+          var mealTitle = document.createElement('pre');
           mealTitle.classList.add('meal-title');
-          mealTitle.textContent = meals[i].DDISH_NM.replace(/<br\/>/g, '\n'); // <br/> 태그를 개행 문자로 변환하여 표시
+          mealTitle.textContent = meals[i].DDISH_NM.replace(/<br\/>/g, '\n');
 
           mealItem.appendChild(mealTitle);
           mealContainer.appendChild(mealItem);
@@ -61,20 +87,49 @@
         "pSize": 100,
         "ATPT_OFCDC_SC_CODE": "R10",
         "SD_SCHUL_CODE": "8750542",
-        "MMEAL_SC_CODE": "1",
-        "MLSV_YMD": "20230526",
+        "MMEAL_SC_CODE": "",
+        "MLSV_YMD": "20230525",
       };
 
-      // API 요청 보내기
+      // 조식 요청 보내기
+      params.MMEAL_SC_CODE = "1"; // 조식 코드인 1로 설정
       $.ajax({
         url: URL,
         data: params,
         dataType: 'json',
         success: function(response) {
-          displayData(response);
+          displayData(response, "1");
         },
         error: function(xhr, status, error) {
-          $('#meal-result').html("찾는 데이터가 없습니다.");
+          $('#breakfast-result').html("찾는 데이터가 없습니다.");
+        }
+      });
+
+      // 중식 요청 보내기
+      params.MMEAL_SC_CODE = "2"; // 중식 코드인 2로 설정
+      $.ajax({
+        url: URL,
+        data: params,
+        dataType: 'json',
+        success: function(response) {
+          displayData(response, "2");
+        },
+        error: function(xhr, status, error) {
+          $('#lunch-result').html("찾는 데이터가 없습니다.");
+        }
+      });
+
+      // 석식 요청 보내기
+      params.MMEAL_SC_CODE = "3"; // 석식 코드인 3으로 설정
+      $.ajax({
+        url: URL,
+        data: params,
+        dataType: 'json',
+        success: function(response) {
+          displayData(response, "3");
+        },
+        error: function(xhr, status, error) {
+          $('#dinner-result').html("찾는 데이터가 없습니다.");
         }
       });
     }
