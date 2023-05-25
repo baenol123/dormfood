@@ -27,6 +27,11 @@
 </head>
 <body>
   <h1>테스트용</h1>
+  <div>
+    <label for="date-input">날짜:</label>
+    <input type="date" id="date-input">
+    <button onclick="getData()">조회</button>
+  </div>
   <div class="meal-container">
     <div class="meal-column">
       <h2>조식</h2>
@@ -88,8 +93,13 @@
         "ATPT_OFCDC_SC_CODE": "R10",
         "SD_SCHUL_CODE": "8750542",
         "MMEAL_SC_CODE": "",
-        "MLSV_YMD": "20230525",
+        "MLSV_YMD": "",
       };
+
+      // 선택한 날짜 가져오기
+      var dateInput = document.getElementById('date-input');
+      var selectedDate = dateInput.value;
+      params.MLSV_YMD = selectedDate.replaceAll("-", ""); // 날짜 형식 변환
 
       // 조식 요청 보내기
       params.MMEAL_SC_CODE = "1"; // 조식 코드인 1로 설정
@@ -134,10 +144,7 @@
       });
     }
 
-    // 페이지 로드 시 데이터 가져오기
-    $(document).ready(function() {
-      getData();
-    });
+    ;
   </script>
 </body>
 </html>
