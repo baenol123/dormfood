@@ -21,7 +21,7 @@
   </style>
 </head>
 <body>
-  <h1>테스트용1.2</h1>
+  <h1>테스트1.3</h1>
   <div id="meal-result"></div>
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -31,8 +31,8 @@
       var mealContainer = document.getElementById('meal-result');
       mealContainer.innerHTML = '';
 
-      if (response !== undefined && response.length > 0) {
-        var meals = response[1].row; // 첫 번째 항목의 급식 데이터 가져오기
+      if (response !== undefined && response.mealServiceDietInfo.length > 0) {
+        var meals = response.mealServiceDietInfo[1].row; // 두 번째 항목의 급식 데이터 가져오기
 
         for (var i = 0; i < meals.length; i++) {
           var mealItem = document.createElement('div');
