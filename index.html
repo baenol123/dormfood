@@ -21,7 +21,7 @@
   </style>
 </head>
 <body>
-  <h1>테스트용</h1>
+  <h1>테스트용1.2</h1>
   <div id="meal-result"></div>
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -32,13 +32,15 @@
       mealContainer.innerHTML = '';
 
       if (response !== undefined && response.length > 0) {
-        for (var i = 0; i < response.length; i++) {
+        var meals = response[1].row; // 첫 번째 항목의 급식 데이터 가져오기
+
+        for (var i = 0; i < meals.length; i++) {
           var mealItem = document.createElement('div');
           mealItem.classList.add('meal-item');
 
           var mealTitle = document.createElement('div');
           mealTitle.classList.add('meal-title');
-          mealTitle.textContent = JSON.stringify(response[i]);
+          mealTitle.textContent = meals[i].DDISH_NM.replace(/<br\/>/g, '\n'); // <br/> 태그를 개행 문자로 변환하여 표시
 
           mealItem.appendChild(mealTitle);
           mealContainer.appendChild(mealItem);
