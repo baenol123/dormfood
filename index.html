@@ -35,43 +35,48 @@
     <h1 class="meal-title">급식 정보</h1>
     <div id="meal-result"></div>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-      // JavaScript 코드를 추가하세요
-      // API 요청 및 결과를 HTML 페이지에 표시하는 로직을 작성해야 합니다.
-      // 아래의 코드는 예시이며, 필요에 따라 수정해야 합니다.
-
       // API 요청을 보내고 결과를 가져오는 함수
       function getData() {
-        // 서버 요청 로직을 작성하세요
-        // 위의 코드의 get_data() 메서드를 활용할 수 있습니다.
+        var URL = "https://open.neis.go.kr/hub/"; // API 엔드포인트 URL
+        var params = {
+          "KEY": "aadbb67b33224556a715ad2d41d2c442",
+          "Type": "json"
+        };
+        var schoolinfo = {};
+        var sub_url = "mealServiceDietInfo"; // API 서브 엔드포인트
+
+        // API 요청 보내기
+        $.ajax({
+          url: URL + sub_url,
+          data: $.extend(params, schoolinfo),
+          dataType: 'json',
+          success: function(response) {
+            displayData(response);
+          },
+          error: function(xhr, status, error) {
+            $('#meal-result').html("찾는 데이터가 없습니다.");
+          }
+        });
       }
 
       // 가져온 데이터를 HTML에 표시하는 함수
       function displayData(data) {
-        // HTML 페이지에서 결과를 표시할 요소를 선택합니다.
-        var resultContainer = document.getElementById('meal-result');
+        var resultContainer = $('#meal-result');
 
-        if (data) {
+        if (data[sub_url][0].head[0].list_total_count == 1) {
+          var mealData = data[sub_url][1].row[0];
           var mealString = '';
 
-          if (data.length > 0) {
-            // 데이터가 있는 경우
-            mealString += '<h2>오늘의 급식</h2>';
+          mealString += '<h2>오늘의 급식</h2>';
+          mealString += '<p class="meal-item"><strong>조식:</strong><br>' + mealData.DDISH_NM.replace(/<br\/>/g, '<br>') + '</p>';
+          mealString += '<p class="meal-item"><strong>중식:</strong><br>' + mealData.DDISH_NM_1.replace(/<br\/>/g, '<br>') + '</p>';
+          mealString += '<p class="meal-item"><strong>석식:</strong><br>' + mealData.DDISH_NM_2.replace(/<br\/>/g, '<br>') + '</p>';
 
-            for (var i = 0; i < data.length; i++) {
-              var meal = data[i].DDISH_NM.replace("<br/>", "<br>");
-              mealString += '<p class="meal-item">' + meal + '</p>';
-            }
-          } else {
-            // 데이터가 없는 경우
-            mealString += '<p>오늘은 급식이 없습니다.</p>';
-          }
-
-          // 결과를 HTML에 할당합니다.
-          resultContainer.innerHTML = mealString;
+          resultContainer.html(mealString);
         } else {
-          // 데이터가 없는 경우
-          resultContainer.innerHTML = '<p>찾는 데이터가 없습니다.</p>';
+          resultContainer.html("오늘은 급식이 없습니다.");
         }
       }
 
@@ -81,4 +86,3 @@
   </div>
 </body>
 </html>
-
