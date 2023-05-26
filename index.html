@@ -4,25 +4,88 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>급식메뉴</title>
   <style>
-    .meal-container {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      display: flex;
+     /* 흑백 스타일 */
+    body {
+      background-color: #fff;
+      color: #000;
     }
-    .meal-column {
-      flex: 1;
-    }
-    .meal-title {
-      font-size: 20px;
-      font-weight: bold;
-      margin-bottom: 10px;
-      white-space: pre-wrap;
-    }
-    .meal-item {
-      margin-bottom: 5px;
-    }
+css
+Copy code
+h1, h2 {
+  color: #000;
+}
+
+.meal-container {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  display: flex;
+}
+
+.meal-column {
+  flex: 1;
+}
+
+.meal-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  white-space: pre-wrap;
+}
+
+.meal-item {
+  margin-bottom: 5px;
+}
+
+/* 모던한 스타일 */
+h1 {
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+label {
+  font-size: 18px;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+input[type="date"] {
+  padding: 5px;
+  font-size: 16px;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 18px;
+  font-weight: bold;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.meal-column {
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  margin: 10px;
+}
+
+.meal-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  white-space: pre-wrap;
+}
+
+.meal-item {
+  margin-bottom: 10px;
+  font-size: 18px;
+}
   </style>
 </head>
 <body>
